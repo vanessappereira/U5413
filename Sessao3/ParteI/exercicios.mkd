@@ -1,0 +1,10 @@
+# 5413 - Programação computadores - orientada a objetos
+
+## Parte I
+
+1. Declarar um vetor de 5 nrs inteiros ler e guardar no mesmo os valores fornecidos pelo utilizador. Somar todos os elementos.
+2. Declarar um vetor de 10 nrs inteiros ler e guardar no mesmo os valores fornecidos pelo utilizador. Mostrar o menor e o maior número.
+3. Solicitar 10 nrs inteiros ler e guardar no mesmo os valores fornecidos pelo utilizador. Deverá também pedir um nr e verificar se o mesmo existe no vetor, mostrando a posição em que foi encontrado ou uma mensagem de que o número não está no vetor.
+4. Solicitar 10 nrs inteiros ler e guardar no mesmo os valores fornecidos pelo utilizador. Deverá garantir que não sejam digitados valores repetidos, solicitando uma nova entrada caso haja duplicação.
+
+## Parte II
