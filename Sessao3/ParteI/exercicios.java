@@ -48,7 +48,8 @@ public class exercicios {
             while (existe) {
                 numero = scanner.nextInt();
                 if (existeNumero(vetor5, numero)) {
-                    System.out.println("Número já existe, por favor digite outro número.");
+                    // mostrando a posição em que foi encontrado
+                    System.out.println("O número " + numero + " já existe na posição " + i);
                 } else {
                     existe = false;
                 }
@@ -67,23 +68,32 @@ public class exercicios {
     private static void declareVector10(Scanner scanner) {
         // vetor de 10
         System.out.println("Por favor digite 10 números ");
-
+        int numero;
         for (int i = 0; i < vetor10.length; i++) {
-            vetor10[i] = scanner.nextInt();
-        }
-        // Verificar o menor e o mair número
-        int menor = vetor10[0];
-        int maior = vetor10[0];
+            boolean existe = true;
+            while (existe) {
+                numero = scanner.nextInt();
+                if (existeNumero(vetor5, numero)) {
+                    // mostrando a posição em que foi encontrado
+                    System.out.println("O número " + numero + " já existe na posição " + i);
+                } else {
+                    existe = false;
+                }
+            }
+            // Verificar o menor e o mair número
+            int menor = vetor10[0];
+            int maior = vetor10[0];
 
-        for (int i = 0; i < vetor10.length; i++) {
-            if (vetor10[i] < menor) {
-                menor = vetor10[i];
+            for (int j = 0; j < vetor10.length; j++) {
+                if (vetor10[j] < menor) {
+                    menor = vetor10[j];
+                }
+                if (vetor10[j] > maior) {
+                    maior = vetor10[j];
+                }
             }
-            if (vetor10[i] > maior) {
-                maior = vetor10[i];
-            }
+            System.out.println("Ex2- Vetor de 10\nMenor número: " + menor + "\nMaior número: " + maior);
         }
-        System.out.println("Ex2- Vetor de 10\nMenor número: " + menor + "\nMaior número: " + maior);
     }
 
     private static void viewVectors(Scanner scanner) {
