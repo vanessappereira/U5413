@@ -187,7 +187,6 @@ public class exercicios {
                 default:
                     System.out.println("Opção inválida");
             }
-            scanner.close();
         }
     }
 }
