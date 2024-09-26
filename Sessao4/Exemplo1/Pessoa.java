@@ -1,8 +1,8 @@
-package Sessao4;
+package Sessao4.Exemplo1;
 
 public class Pessoa {
 
-    /* Atributos */
+    /* Atributes */
     private String nome, estado;
     private int idade;
     private double altura;
@@ -30,8 +30,8 @@ public class Pessoa {
     public void setAltura(double altura) {
         this.altura = altura;
     }
+    
     //Getters
-
     public String getNome() {
         return nome;
     }
