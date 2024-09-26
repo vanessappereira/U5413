@@ -10,44 +10,44 @@ public class exercicios {
      * das matrizes, a respetiva multiplicação e mostrar o resultado.
      */
     public static void calcMatrizes() {
-        Scanner scanner = new Scanner(System.in);
-
         // Criar as matrizes 2x2
-        int[][] matriz1 = new int[2][2];
-        int[][] matriz2 = new int[2][2];
-        int[][] matrizResultado = new int[2][2];
-
-        // Ler os valores das matrizes
-        System.out.println("Digite os valores da primeira matriz:");
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                matriz1[i][j] = scanner.nextInt();
+        try (Scanner scanner = new Scanner(System.in)) {
+            // Criar as matrizes 2x2
+            int[][] matriz1 = new int[2][2];
+            int[][] matriz2 = new int[2][2];
+            int[][] matrizResultado = new int[2][2];
+            
+            // Ler os valores das matrizes
+            System.out.println("Digite os valores da primeira matriz:");
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 2; j++) {
+                    matriz1[i][j] = scanner.nextInt();
+                }
+            }
+            
+            System.out.println("Digite os valores da segunda matriz:");
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 2; j++) {
+                    matriz2[i][j] = scanner.nextInt();
+                }
+            }
+            
+            // Calcular a multiplicação elemento a elemento
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 2; j++) {
+                    matrizResultado[i][j] = matriz1[i][j] * matriz2[i][j];
+                }
+            }
+            
+            // Imprimir a matriz resultado
+            System.out.println("Matriz resultado da multiplicação elemento a elemento:");
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 2; j++) {
+                    System.out.print(matrizResultado[i][j] + " ");
+                }
+                System.out.println();
             }
         }
-
-        System.out.println("Digite os valores da segunda matriz:");
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                matriz2[i][j] = scanner.nextInt();
-            }
-        }
-
-        // Calcular a multiplicação elemento a elemento
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                matrizResultado[i][j] = matriz1[i][j] * matriz2[i][j];
-            }
-        }
-
-        // Imprimir a matriz resultado
-        System.out.println("Matriz resultado da multiplicação elemento a elemento:");
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                System.out.print(matrizResultado[i][j] + " ");
-            }
-            System.out.println();
-        }
-        scanner.close();
     }
 
     public static void calMatrizesRandom() {
