@@ -13,9 +13,9 @@ public class exemplo {
         tabela[1][1] = 60;
         tabela[1][2] = 80;
 
-        for (int i = 0; i < tabela.length; i++) {
-            for (int j = 0; j < tabela[i].length; j++) {
-                System.out.print(tabela[i][j] + " ");
+        for (int[] tabela1 : tabela) {
+            for (int j = 0; j < tabela1.length; j++) {
+                System.out.print(tabela1[j] + " ");
             }
             System.out.println();
         }

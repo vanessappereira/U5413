@@ -15,18 +15,14 @@ public class exercicios {
         int vectorOption = scanner.nextInt();
 
         switch (vectorOption) {
-            case 1:
-                declareVector5(scanner);
-                break;
-            case 2:
-                declareVector10(scanner);
-                break;
-            case 0:
+            case 1 -> declareVector5(scanner);
+            case 2 -> declareVector10(scanner);
+            case 0 -> {
                 // volta para o menu anterior
                 System.out.println("Voltando para o menu anterior");
                 return;
-            default:
-                System.out.println("Opção inválida");
+            }
+            default -> System.out.println("Opção inválida");
         }
     }
 
@@ -103,7 +99,7 @@ public class exercicios {
         int opcao = scanner.nextInt();
 
         switch (opcao) {
-            case 1:
+            case 1 -> {
                 // ver data do vetor 5
                 if (vetor5 != null && vetor5.length > 0) {
                     System.out.println("Vetor 5:");
@@ -113,8 +109,8 @@ public class exercicios {
                 } else {
                     System.out.println("O vetor 5 está vazio.");
                 }
-                break;
-            case 2:
+            }
+            case 2 -> {
                 // ver data do vetor 10
                 if (vetor10 != null && vetor10.length > 0) {
                     System.out.println("Vetor 10:");
@@ -124,13 +120,13 @@ public class exercicios {
                 } else {
                     System.out.println("O vetor 10 está vazio.");
                 }
-                break;
-            case 0:
+            }
+            case 0 -> {
                 // volta para o menu anterior
                 System.out.println("Voltando para o menu anterior");
                 return;
-            default:
-                System.out.println("Opção inválida");
+            }
+            default -> System.out.println("Opção inválida");
         }
     }
 

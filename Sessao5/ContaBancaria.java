@@ -23,7 +23,7 @@ public class ContaBancaria {
     private final int numeroConta;
     private double saldo;
     private int nrmovimentos;
-    private List<String> movimentos; // List para guardar os movimentos
+    private final List<String> movimentos; // List para guardar os movimentos
 
     /* Constructor */
     public ContaBancaria(int numeroConta) {
