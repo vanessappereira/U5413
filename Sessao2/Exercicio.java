@@ -5,34 +5,34 @@ import java.util.Scanner;
 public class Exercicio {
 
     public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-
-        System.out.println("Insira 2 Strings:");
-        String a = s.nextLine();
-        String b = s.nextLine();
-
-        s.close();
+        String a;
+        String b;
+        try (Scanner s = new Scanner(System.in)) {
+            System.out.println("Insira 2 Strings:");
+            a = s.nextLine();
+            b = s.nextLine();
+        }
 
         // Compare Strings
         System.out.println("Compare Strings: " + a.equals(b));
 
         int codigo = 2;
 
-        String cor = "";
+        String cor;
 
         switch (codigo) {
-            case 1:
+            case 1 -> {
                 cor = "Vermelho";
                 System.out.println(cor);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 cor = "Azul";
                 System.out.println(cor);
-                break;
-            default:
+            }
+            default -> {
                 cor = "Preto";
                 System.out.println(cor);
-                break;
+            }
         }
     }
 }
