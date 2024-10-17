@@ -1,4 +1,4 @@
-package Sessao3.ParteII;
+package Sessao3.Parte2;
 
 import java.util.Random;
 import java.util.Scanner;

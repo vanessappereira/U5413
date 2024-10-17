@@ -1,8 +1,9 @@
-package Sessao3.ParteI;
+package Sessao3.Parte1;
 
 import java.util.Scanner;
 
 public class exercicios {
+
     // Declarar vectores de 5 e 10 - para que estes vetores possam ser
     // acedidos/partilhados nas funções das classes, terá de ser estático
     static int[] vetor5 = new int[5];
@@ -15,14 +16,17 @@ public class exercicios {
         int vectorOption = scanner.nextInt();
 
         switch (vectorOption) {
-            case 1 -> declareVector5(scanner);
-            case 2 -> declareVector10(scanner);
+            case 1 ->
+                declareVector5(scanner);
+            case 2 ->
+                declareVector10(scanner);
             case 0 -> {
                 // volta para o menu anterior
                 System.out.println("Voltando para o menu anterior");
                 return;
             }
-            default -> System.out.println("Opção inválida");
+            default ->
+                System.out.println("Opção inválida");
         }
     }
 
@@ -126,34 +130,37 @@ public class exercicios {
                 System.out.println("Voltando para o menu anterior");
                 return;
             }
-            default -> System.out.println("Opção inválida");
+            default ->
+                System.out.println("Opção inválida");
         }
     }
 
     private static void searchNumber(Scanner scanner) {
-        boolean nrEncontrado = false;
-
         System.out.println("Digite o número a procurar: ");
         int number = scanner.nextInt();
 
-        // Procurar no vetor de 5
-        for (int i = 0; i < vetor5.length; i++) {
-            if (vetor5[i] == number) {
-                System.out.println("O número foi encontrado no vetor5 na posição " + i);
-                nrEncontrado = true;
-                break;
-            }
-            // Não encontrando no v5, procura no v10
-            if (!nrEncontrado) {
-                for (int j = 0; j < vetor10.length; j++) {
-                    if (vetor10[i] == number) {
-                        System.out.println("O número foi encontrado no vetor10 na posição " + j);
-                        nrEncontrado = true;
-                        break;
-                    }
-                }
+        // Search in vetor5 first
+        int indexInVetor5 = findNumberInArray(vetor5, number);
+        if (indexInVetor5 != -1) {
+            System.out.println("O número foi encontrado no vetor5 na posição " + indexInVetor5);
+        } else {
+            // If not found in vetor5, search in vetor10
+            int indexInVetor10 = findNumberInArray(vetor10, number);
+            if (indexInVetor10 != -1) {
+                System.out.println("O número foi encontrado no vetor10 na posição " + indexInVetor10);
+            } else {
+                System.out.println("O número não foi encontrado.");
             }
         }
+    }
+
+    private static int findNumberInArray(int[] array, int number) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == number) {
+                return i; // Return the index if found
+            }
+        }
+        return -1; // Return -1 if not found
     }
 
     public static void main(String[] args) {
