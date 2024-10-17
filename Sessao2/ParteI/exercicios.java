@@ -12,15 +12,16 @@ public class exercicios {
          */
         int seconds, hours, minutes, secondsLeft;
 
-        Scanner s = new Scanner(System.in);
-        System.out.println("Determinar o tempo \n" + "Insira o valor em segundos: ");
-        seconds = s.nextInt();
+        try (Scanner s = new Scanner(System.in)) {
+            System.out.println("""
+                                           Determinar o tempo
+                                           Insira o valor em segundos: """);
+            seconds = s.nextInt();
 
-        hours = seconds / 3600;
-        minutes = (seconds % 3600) / 60;
-        secondsLeft = seconds % 60;
-
-        s.close();
+            hours = seconds / 3600;
+            minutes = (seconds % 3600) / 60;
+            secondsLeft = seconds % 60;
+        }
 
         System.out.println(
                 "O tempo inserido é: " + hours + " horas, " + minutes + " minutos e " + secondsLeft + " segundos");
@@ -44,7 +45,9 @@ public class exercicios {
         }
         System.out.println("O triângulo é: " + triangleType);
         return triangleType;
-    };
+    }
+
+    ;
 
     public static void checkParkPayment(int hour) {
         /*
