@@ -5,11 +5,11 @@ import java.time.LocalDate;
 public class Refrigerante extends Produto {
 
     private boolean sugarFree;
-    private String marca; // Pepsi, Sumol, Lipton
 
-    public Refrigerante(String nome, double price, LocalDate expiryDate, String reference) {
-        super(nome, price, expiryDate, reference);
+    public Refrigerante(String nome, double preco, LocalDate dataExp, String referencia, String marca) {
+        super(nome, preco, dataExp, referencia, marca);
         this.sugarFree = sugarFree;
-        this.marca = marca;
     }
+
+
 }

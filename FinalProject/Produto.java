@@ -9,18 +9,34 @@ public abstract class Produto implements Serializable {
     private double preco;
     private String referencia;
     private LocalDate dataExp;
+    private String marca;
 
-    public Produto(String nome, double preco, LocalDate dataExp, String referencia) {
+    public Produto(String nome, double preco, LocalDate dataExp, String referencia, String marca) {
         this.nome = nome;
         this.preco = preco;
         this.dataExp = dataExp;
         this.referencia = referencia;
+        this.marca = marca;
     }
 
     /* Getters e Setters */
-    public String getnome() { return nome; }
-    public double getpreco() { return preco; }
-    public String getReferencia() { return referencia; }
-    public LocalDate getdataExp() { return dataExp; }
-    
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public LocalDate getDataExp() {
+        return dataExp;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
 }

@@ -1,24 +1,21 @@
+
 package FinalProject;
 
 import java.util.Scanner;
 
+
 public class Main {
 
-    private static MaquinaVendas machine;
+    private static VendingMachine machine;
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        machine = MaquinaVendas.loadFromFile();
-        try {
+        machine = VendingMachine.loadFromFile();
             while (true) {
                 showMainMenu();
             }
-        } finally {
-            try (scanner) {
-                machine.saveToFile();
-            }
         }
-    }
+    
 
     private static void showMainMenu() {
         System.out.println("----- Máquina de Venda -----");
@@ -45,6 +42,10 @@ public class Main {
     }
 
     private static void customerMenu() {
+        /* Add Amount */
+        System.out.println("----- Menu Cliente -----");
+        machine.buyProduct(scanner);
+
         
     }
 

@@ -5,12 +5,13 @@ import java.time.LocalDate;
 public class Sandes extends Produto {
 
     private String tipoSandes; // mista, fiambre, queijo
-    private String produtor;
 
-    public Sandes(String nome, double price, LocalDate expiryDate, String reference) {
-        super(nome, price, expiryDate, reference);
-        this.tipoSandes = tipoSandes;
-        this.produtor = produtor;
+    public Sandes(String nome, double preco, LocalDate dataExp, String referencia, String marca) {
+        super(nome, preco, dataExp, referencia, marca);
+        this.tipoSandes = tipoSandes;       
+
     }
+
+ 
 
 }
