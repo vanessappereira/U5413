@@ -20,9 +20,7 @@ public abstract class Produto implements Serializable {
     /* Getters e Setters */
     public String getnome() { return nome; }
     public double getpreco() { return preco; }
-    public String getreferencia() { return referencia; }
+    public String getReferencia() { return referencia; }
     public LocalDate getdataExp() { return dataExp; }
-
-
-
+    
 }

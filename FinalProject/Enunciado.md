@@ -37,10 +37,3 @@
 
 > A aplicação deve ser desenvolvida com foco na utilização dos conceitos de programação orientada a objetos, garantindo que a estrutura do código seja flexível e mantenha a capacidade de expansão para futuras funcionalidades.
 > As funcionalidades são acedidas através de um menu de texto. Já os dados. deverão ser guardados de forma permanente num ficheiro chamado stock.dat e carregados automaticamente sempre que a máquina for ligada. Proceda ao tratamento das possíveis exceções.
-
-
-[Product] <|-- [Chocolate]
-[Product] <|-- [Beverage]
-[Product] <|-- [Sandwich]
-[VendingMachine] --> [Product]
-[VendingMachineApp] --> [VendingMachine]
