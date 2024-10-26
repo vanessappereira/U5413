@@ -24,4 +24,13 @@ public class MaquinaVendas implements Serializable {
         totalVendas = 0.0;
     }
 
+    static MaquinaVendas loadFromFile() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    void saveToFile() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    
 }
