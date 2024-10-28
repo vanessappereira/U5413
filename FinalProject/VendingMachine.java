@@ -62,7 +62,21 @@ public class VendingMachine implements Serializable {
         return sandwiches;
     }
 
-    /* Machine management - Add Product using scanner */
+    public List<Produto> getSoldProducts() {
+        return new ArrayList<>(produtosVendidos);
+    }
+
+    public double getTotalSales() {
+        return totalVendas;
+    }
+
+    public void cleanHistorySales() {
+        produtosVendidos.clear();
+        totalVendas = 0.0;
+    }
+
+    /* ===================== Machine management ===================== */
+    // =========== Add Product using scanner =========== //
     public void addProduct(Scanner scanner) {
         System.out.println("Escolha o tipo de produto:");
         System.out.println("1 - Chocolate");
@@ -83,6 +97,20 @@ public class VendingMachine implements Serializable {
         }
     }
 
+    // =========== Sales History =========== //
+    public void displaySalesHistory() {
+        System.out.println("Histórico de vendas:");
+        if (produtosVendidos.isEmpty()) {
+            System.out.println("Nenhum produto foi vendido ainda.");
+        } else {
+            for (Produto product : produtosVendidos) {
+                System.out.println(product);
+            }
+            System.out.println("Total de vendas: " + totalVendas + "€");
+        }
+    }
+
+    // =========== Add Chocolate =========== //
     private void addChocolate(Scanner scanner) {
         scanner.nextLine(); // Consume newline left-over
         TipoCacau tipoCacau;
@@ -143,6 +171,7 @@ public class VendingMachine implements Serializable {
         }
     }
 
+    // =========== Add Refrigerante =========== //
     private void addRefrigerante(Scanner scanner) {
         scanner.nextLine();
         TipoRefri tipoRefri;
@@ -201,6 +230,7 @@ public class VendingMachine implements Serializable {
         }
     }
 
+    // =========== Add Sandes =========== //
     private void addSandes(Scanner scanner) {
         scanner.nextLine();
         TipoSandes tipoSandes;
@@ -265,20 +295,11 @@ public class VendingMachine implements Serializable {
 
     }
 
-    public List<Produto> getSoldProducts() {
-        return new ArrayList<>(produtosVendidos);
-    }
+    // =========== Remove Chocolate =========== //
+    // =========== Remove Refrigerante =========== //
+    // =========== Remove Sandes =========== //
 
-    public double getTotalSales() {
-        return totalVendas;
-    }
-
-    public void cleanHistorySales() {
-        produtosVendidos.clear();
-        totalVendas = 0.0;
-    }
-
-    /* Client Menu - Buy Product */
+    /* ===================== Client Menu - Buy Product ===================== */
     public void buyProduct(Scanner scanner) {
         System.out.println("Escolha o produto:");
         System.out.println("1 - Chocolate");

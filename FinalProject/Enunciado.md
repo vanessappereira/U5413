@@ -3,8 +3,6 @@
 
 ## Neste exercício pretende-se que desenvolva uma aplicação que simule uma máquina de venda automática de snacks. A máquina deve ter a capacidade de vender diversos tipos de produtos: chocolates, refrigerantes e sandes. Cada produto é caracterizado por um nome, um preço, uma referência e um prazo de validade
 
-## Entregar código fonte e respetivo diagrama de classes
-
 ### A máquina possui as seguintes capacidades
 
 - 20 Chocolates
