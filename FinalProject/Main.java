@@ -42,11 +42,8 @@ public class Main {
     }
 
     private static void customerMenu() {
-        /* Add Amount */
         System.out.println("----- Menu Cliente -----");
-        machine.buyProduct(scanner);
-
-        
+        machine.buyProduct(scanner);        
     }
 
     private static void adminMenu() {
@@ -55,7 +52,6 @@ public class Main {
         System.out.println("2. Remover produto");
         System.out.println("3. Consultar valor total de vendas");
         System.out.println("4. Visualizar Histórico");
-        System.out.println("5. Voltar ao menu principal");
-        
+        System.out.println("5. Voltar ao menu principal");        
     }
 }
