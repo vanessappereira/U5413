@@ -37,7 +37,7 @@ public class VendingMachine implements Serializable {
         try (ObjectInputStream file = new ObjectInputStream(new FileInputStream("stock.dat"))) {
             return (VendingMachine) file.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading vending machine: " + e.getMessage());
+            System.out.println("Erro ao ler a máquina: " + e.getMessage());
             return new VendingMachine();
         }
     }
@@ -48,6 +48,18 @@ public class VendingMachine implements Serializable {
         } catch (IOException e) {
             System.out.println("Erro a guardar no ficheiro da máquina: " + e.getMessage());
         }
+    }
+
+    public List<Chocolate> getChocolates() {
+        return chocolates;
+    }
+
+    public List<Refrigerante> getRefrigerantes() {
+        return refrigerantes;
+    }
+
+    public List<Sandes> getSandwiches() {
+        return sandwiches;
     }
 
     /* Machine management - Add Product using scanner */
@@ -243,7 +255,7 @@ public class VendingMachine implements Serializable {
 
                 for (int i = 0; i < quantity; i++) {
                     Sandes novaSandes = new Sandes(name, price, expDate, reference, brand, tipoSandes);
-                    
+
                     sandwiches.add(novaSandes);
                     System.out.println("Sandes adicionada com sucesso!");
                 }
@@ -278,7 +290,7 @@ public class VendingMachine implements Serializable {
         int choice = scanner.nextInt();
         scanner.nextLine();
 
-        /* List all type products*/
+        /* List all type products */
         switch (choice) {
             case 1 ->
                 buyChocolate(scanner);
@@ -297,30 +309,110 @@ public class VendingMachine implements Serializable {
         if (chocolates.isEmpty()) {
             System.out.println("Desculpe, não há chocolates disponíveis.");
         }
-        // Implement chocolate buying logic
+        System.out.println("\n=== Chocolates Disponíveis ===");
+        for (Chocolate chocolate : chocolates) {
+            System.out.printf("%s - %s - %.2f€ - Tipo: %s - Marca: %s%n",
+                    chocolate.getReferencia(),
+                    chocolate.getNome(),
+                    chocolate.getPreco(),
+                    chocolate.getTipoCacau(),
+                    chocolate.getMarca()
+            );
+        }
         /* Select a product by reference */
-        for (int i = 0; i < chocolates.size(); i++) {
-            System.out.println((i + 1) + " - " + chocolates.get(i).getNome());
+        System.out.print("\nEscolha o chocolate pela referência: (0 para cancelar):");
+        String reference = scanner.nextLine().trim();
+        if (reference.equals("0")) {
+            System.out.println("Compra cancelada.");
+        }
+        // Find the selected chocolate
+        Chocolate selectedChocolate = null;
+        for (Chocolate chocolate : chocolates) {
+            if (chocolate.getReferencia().equalsIgnoreCase(reference)) {
+                selectedChocolate = chocolate;
+                break;
+            }
         }
 
+        if (selectedChocolate == null) {
+            System.out.println("Referência inválida!");
+            return;
+        }
+
+        //PAYMENT LOGIC
     }
 
     private void buyRefrigerante(Scanner scanner) {
         if (refrigerantes.isEmpty()) {
             System.out.println("Desculpe, não há refrigerantes disponíveis.");
         }
-        // Implement refrigerante buying logic
+        System.out.println("\n=== Refrigerantes Disponíveis ===");
+        for (Refrigerante refrigerante : refrigerantes) {
+            System.out.printf("%s - %s - %.2f€ - Tipo: %s - Marca: %s%n",
+                    refrigerante.getReferencia(),
+                    refrigerante.getNome(),
+                    refrigerante.getPreco(),
+                    refrigerante.getTipoRefri(),
+                    refrigerante.getMarca()
+            );
+        }
         /* Select a product by reference */
+        System.out.print("\nEscolha o refrigerante pela referência: (0 para cancelar):");
+        String reference = scanner.nextLine().trim();
+        if (reference.equals("0")) {
+            System.out.println("Compra cancelada.");
+        }
+        // Find the selected refrigerante
+        Refrigerante selectedRefrigerante = null;
+        for (Refrigerante refrigerante : refrigerantes) {
+            if (refrigerante.getReferencia().equalsIgnoreCase(reference)) {
+                selectedRefrigerante = refrigerante;
+                break;
+            }
+        }
 
+        if (selectedRefrigerante == null) {
+            System.out.println("Referência inválida!");
+            return;
+        }
+
+        //PAYMENT LOGIC
     }
 
     private void buySandes(Scanner scanner) {
         if (sandwiches.isEmpty()) {
             System.out.println("Desculpe, não há sandes disponíveis.");
         }
-        // Implement sandes buying logic
+        System.out.println("\n=== Sandes Disponíveis ===");
+        for (Sandes sande : sandwiches) {
+            System.out.printf("%s - %s - %.2f€ - Tipo: %s - Marca: %s%n",
+                    sande.getReferencia(),
+                    sande.getNome(),
+                    sande.getPreco(),
+                    sande.getTipoSandes(),
+                    sande.getMarca()
+            );
+        }
         /* Select a product by reference */
+        System.out.print("\nEscolha a sandes pela referência: (0 para cancelar):");
+        String reference = scanner.nextLine().trim();
+        if (reference.equals("0")) {
+            System.out.println("Compra cancelada.");
+        }
+        // Find the selected sandes
+        Sandes selectedSandes = null;
+        for (Sandes sande : sandwiches) {
+            if (sande.getReferencia().equalsIgnoreCase(reference)) {
+                selectedSandes = sande;
+                break;
+            }
+        }
 
+        if (selectedSandes == null) {
+            System.out.println("Referência inválida!");
+            return;
+        }
+
+        //PAYMENT LOGIC
     }
-
 }
