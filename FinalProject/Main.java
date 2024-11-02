@@ -68,19 +68,17 @@ public class Main {
                     machine.saveToFile();
                 }
                 case 2 -> {
-                    // Implement remove product
                     machine.saveToFile();
                 }
                 case 3 -> {
-                    machine.displaySalesHistory();
+                    machine.displayTotalSales();
                 }
                 case 4 -> {
-                    machine.saveToFile();
                     machine.getSoldProducts();
                 }
                 case 5 -> {
-                    machine.saveToFile();
                     machine.cleanHistorySales();
+                    machine.saveToFile();
                 }
                 case 6 ->
                     showMainMenu();

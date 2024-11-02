@@ -37,19 +37,19 @@ public class VendingMachine implements Serializable {
         try (ObjectInputStream file = new ObjectInputStream(new FileInputStream("stock.dat"))) {
             return (VendingMachine) file.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Erro ao ler a máquina: " + e.getMessage());
+            System.err.println("Erro ao ler a máquina: " + e.getMessage());
             return new VendingMachine();
         }
     }
 
-    public void saveToFile() { //Implement in functions
+    public void saveToFile() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("stock.dat"))) {
             oos.writeObject(this);
         } catch (IOException e) {
-            System.out.println("Erro a guardar no ficheiro da máquina: " + e.getMessage());
+            System.err.println("Erro ao guardar no ficheiro da máquina: " + e.getMessage());
         }
     }
-
+    
     public List<Chocolate> getChocolates() {
         return chocolates;
     }
@@ -75,6 +75,19 @@ public class VendingMachine implements Serializable {
         totalVendas = 0.0;
     }
 
+    // =========== Total Sales =========== //
+    public void displayTotalSales() {
+        System.out.println("Histórico de vendas:");
+        if (produtosVendidos.isEmpty()) {
+            System.out.println("Nenhum produto foi vendido ainda.");
+        } else {
+            for (Produto product : produtosVendidos) {
+                System.out.println(product);
+            }
+            System.out.println("Total de vendas: " + totalVendas + "€");
+        }
+    }
+
     /* ===================== Machine management ===================== */
     // =========== Add Product using scanner =========== //
     public void addProduct(Scanner scanner) {
@@ -97,22 +110,8 @@ public class VendingMachine implements Serializable {
         }
     }
 
-    // =========== Sales History =========== //
-    public void displaySalesHistory() {
-        System.out.println("Histórico de vendas:");
-        if (produtosVendidos.isEmpty()) {
-            System.out.println("Nenhum produto foi vendido ainda.");
-        } else {
-            for (Produto product : produtosVendidos) {
-                System.out.println(product);
-            }
-            System.out.println("Total de vendas: " + totalVendas + "€");
-        }
-    }
-
     // =========== Add Chocolate =========== //
     private void addChocolate(Scanner scanner) {
-        scanner.nextLine(); // Consume newline left-over
         TipoCacau tipoCacau;
 
         if (chocolates.size() >= MAX_CHOCOLATES) {
@@ -131,7 +130,6 @@ public class VendingMachine implements Serializable {
 
                 System.out.println("Introduza o preço:");
                 double price = scanner.nextDouble();
-                scanner.nextLine(); // Consume newline left-over 
 
                 System.out.println("Introduza a data de validade (dd/mm/yyyy):");
                 String expDate = scanner.nextLine();
@@ -169,6 +167,7 @@ public class VendingMachine implements Serializable {
                 }
             }
         }
+        saveToFile();
     }
 
     // =========== Add Refrigerante =========== //
@@ -191,7 +190,7 @@ public class VendingMachine implements Serializable {
 
                 System.out.println("Introduza o preço:");
                 double price = scanner.nextDouble();
-                scanner.nextLine(); // Consume newline left-over 
+                scanner.nextLine(); // Consume newline left-over
 
                 System.out.println("Introduza a data de validade (dd/mm/yyyy):");
                 String expDate = scanner.nextLine();
@@ -228,6 +227,7 @@ public class VendingMachine implements Serializable {
 
             }
         }
+        saveToFile();
     }
 
     // =========== Add Sandes =========== //
@@ -251,7 +251,7 @@ public class VendingMachine implements Serializable {
 
                 System.out.println("Introduza o preço:");
                 double price = scanner.nextDouble();
-                scanner.nextLine(); // Consume newline left-over 
+                scanner.nextLine(); // Consume newline left-over
 
                 System.out.println("Introduza a data de validade (dd/mm/yyyy):");
                 String expDate = scanner.nextLine();
@@ -292,12 +292,146 @@ public class VendingMachine implements Serializable {
 
             }
         }
+        saveToFile();
+    }
 
+    // =========== Remove Product using scanner =========== //
+    public void removeProduct(Scanner scanner) {
+        System.out.println("Escolha o tipo de produto:");
+        System.out.println("1 - Chocolate");
+        System.out.println("2 - Refrigerante");
+        System.out.println("3 - Sandes");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline left-over
+
+        switch (choice) {
+            case 1 ->
+                removeChocolate(scanner);
+            case 2 ->
+                removeRefrigerante(scanner);
+            case 3 ->
+                removeSandes(scanner);
+            default ->
+                System.out.println("Opção inválida!");
+        }
     }
 
     // =========== Remove Chocolate =========== //
+    public void removeChocolate(Scanner scanner) {
+        scanner.nextLine(); // Consume newline left-over
+
+        // List al chocolates
+        for (Chocolate chocolate : chocolates) {
+            System.out.printf("%s - %s - %.2f€ - Tipo: %s - Marca: %s%n",
+                    chocolate.getReferencia(),
+                    chocolate.getNome(),
+                    chocolate.getPreco(),
+                    chocolate.getTipoCacau(),
+                    chocolate.getMarca());
+        }
+        /* Select a product by reference */
+        System.out.print("\nEscolha o chocolate pela referência: (0 para cancelar):");
+        String reference = scanner.nextLine().trim();
+        if (reference.equals("0")) {
+            System.out.println("Remoção cancelada.");
+        }
+        // Find the selected chocolate
+        Chocolate selectedChocolate = null;
+        for (Chocolate chocolate : chocolates) {
+            if (chocolate.getReferencia().equalsIgnoreCase(reference)) {
+                selectedChocolate = chocolate;
+                break;
+            }
+        }
+
+        if (selectedChocolate == null) {
+            System.out.println("Referência inválida!");
+            return;
+        }
+        // Remove the selected chocolate
+        chocolates.remove(selectedChocolate);
+
+        // save stock
+        saveToFile();
+    }
+
     // =========== Remove Refrigerante =========== //
+    public void removeRefrigerante(Scanner scanner) {
+        scanner.nextLine(); // Consume newline left-over
+
+        // List all Refrigerantes
+        for (Refrigerante refrigerante : refrigerantes) {
+            System.out.printf("%s - %s - %.2f€ - Tipo: %s - Marca: %s%n",
+                    refrigerante.getReferencia(),
+                    refrigerante.getNome(),
+                    refrigerante.getPreco(),
+                    refrigerante.getTipoRefri(),
+                    refrigerante.getMarca());
+        }
+        /* Select a product by reference */
+        System.out.print("\nEscolha o refrigerante pela referência: (0 para cancelar):");
+        String reference = scanner.nextLine().trim();
+        if (reference.equals("0")) {
+            System.out.println("Remoção cancelada.");
+        }
+        // Find the selected refrigerante
+        Refrigerante selectedRefrigerante = null;
+        for (Refrigerante refrigerante : refrigerantes) {
+            if (refrigerante.getReferencia().equalsIgnoreCase(reference)) {
+                selectedRefrigerante = refrigerante;
+                break;
+            }
+        }
+
+        if (selectedRefrigerante == null) {
+            System.out.println("Referência inválida!");
+            return;
+        }
+        // Remove the selected chocolate
+        refrigerantes.remove(selectedRefrigerante);
+
+        // save stock
+        saveToFile();
+    }
+
     // =========== Remove Sandes =========== //
+    public void removeSandes(Scanner scanner) {
+        scanner.nextLine(); // Consume newline left-over
+
+        // List all Sandes
+        for (Sandes sandes : sandwiches) {
+            System.out.printf("%s - %s - %.2f€ - Tipo: %s - Marca: %s%n",
+                    sandes.getReferencia(),
+                    sandes.getNome(),
+                    sandes.getPreco(),
+                    sandes.getTipoSandes(),
+                    sandes.getMarca());
+        }
+        /* Select a product by reference */
+        System.out.print("\nEscolha a sandes pela referência: (0 para cancelar):");
+        String reference = scanner.nextLine().trim();
+        if (reference.equals("0")) {
+            System.out.println("Remoção cancelada.");
+        }
+        // Find the selected sandes
+        Sandes selectedSandes = null;
+        for (Sandes sandes : sandwiches) {
+            if (sandes.getReferencia().equalsIgnoreCase(reference)) {
+                selectedSandes = sandes;
+                break;
+            }
+        }
+
+        if (selectedSandes == null) {
+            System.out.println("Referência inválida!");
+            return;
+        }
+        // Remove the selected chocolate
+        sandwiches.remove(selectedSandes);
+
+        // save stock
+        saveToFile();
+    }
 
     /* ===================== Client Menu - Buy Product ===================== */
     public void buyProduct(Scanner scanner) {
@@ -337,8 +471,7 @@ public class VendingMachine implements Serializable {
                     chocolate.getNome(),
                     chocolate.getPreco(),
                     chocolate.getTipoCacau(),
-                    chocolate.getMarca()
-            );
+                    chocolate.getMarca());
         }
         /* Select a product by reference */
         System.out.print("\nEscolha o chocolate pela referência: (0 para cancelar):");
@@ -360,7 +493,7 @@ public class VendingMachine implements Serializable {
             return;
         }
 
-        //PAYMENT LOGIC
+        // PAYMENT LOGIC AND SAVE TO FILE
     }
 
     private void buyRefrigerante(Scanner scanner) {
@@ -374,8 +507,7 @@ public class VendingMachine implements Serializable {
                     refrigerante.getNome(),
                     refrigerante.getPreco(),
                     refrigerante.getTipoRefri(),
-                    refrigerante.getMarca()
-            );
+                    refrigerante.getMarca());
         }
         /* Select a product by reference */
         System.out.print("\nEscolha o refrigerante pela referência: (0 para cancelar):");
@@ -397,7 +529,7 @@ public class VendingMachine implements Serializable {
             return;
         }
 
-        //PAYMENT LOGIC
+        // PAYMENT LOGIC AND SAVE TO FILE
     }
 
     private void buySandes(Scanner scanner) {
@@ -411,8 +543,7 @@ public class VendingMachine implements Serializable {
                     sande.getNome(),
                     sande.getPreco(),
                     sande.getTipoSandes(),
-                    sande.getMarca()
-            );
+                    sande.getMarca());
         }
         /* Select a product by reference */
         System.out.print("\nEscolha a sandes pela referência: (0 para cancelar):");
@@ -434,6 +565,6 @@ public class VendingMachine implements Serializable {
             return;
         }
 
-        //PAYMENT LOGIC
+        // PAYMENT LOGIC AND SAVE TO FILE
     }
 }
