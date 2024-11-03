@@ -7,10 +7,11 @@ public class Sandes extends Produto {
     public enum TipoSandes {
         MISTA, FIAMBRE, QUEIJO
     };
+
     private TipoSandes tipoSandes;
 
-    public Sandes(String nome, double preco, String dataExp, String referencia, String marca, TipoSandes tipoSandes) {
-        super(nome, preco, dataExp, referencia, marca);
+    public Sandes(String nome, double preco, String dataExp, String refBrand, String marca, TipoSandes tipoSandes) {
+        super(nome, preco, dataExp, refBrand, marca);
         this.tipoSandes = tipoSandes;
     }
 
@@ -25,7 +26,9 @@ public class Sandes extends Produto {
 
     @Override
     public String toString() {
-        return String.format("Chocolate: %s, Tipo de Cacau: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s", getNome(), tipoSandes, getPreco(), getMarca(), getReferencia(), getDataExp());
+        return String.format(
+                "Chocolate: %s, Tipo de Cacau: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s",
+                getNome(), tipoSandes, getPreco(), getMarca(), getRefBrand(), getDataExp());
     }
 
     // Compare objects
@@ -48,4 +51,5 @@ public class Sandes extends Produto {
     public int hashCode() {
         return Objects.hash(super.hashCode(), tipoSandes);
     }
+
 }

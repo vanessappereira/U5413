@@ -10,8 +10,8 @@ public class Chocolate extends Produto {
 
     private TipoCacau tipoCacau;
 
-    public Chocolate(String nome, double preco, String dataExp, String referencia, String marca, TipoCacau tipoCacau) {
-        super(nome, preco, dataExp, referencia, marca);
+    public Chocolate(String nome, double preco, String dataExp, String refBrand, String marca, TipoCacau tipoCacau) {
+        super(nome, preco, dataExp, refBrand, marca);
         this.tipoCacau = tipoCacau;
     }
 
@@ -26,7 +26,9 @@ public class Chocolate extends Produto {
 
     @Override
     public String toString() {
-        return String.format("Chocolate: %s, Tipo de Cacau: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s", getNome(), tipoCacau, getPreco(), getMarca(), getReferencia(), getDataExp());
+        return String.format(
+                "Chocolate: %s, Tipo de Cacau: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s",
+                getNome(), tipoCacau, getPreco(), getMarca(), getRefBrand(), getDataExp());
     }
 
     // Compare objects

@@ -10,8 +10,8 @@ public class Refrigerante extends Produto {
 
     private TipoRefri tipoRefri;
 
-    public Refrigerante(String nome, double preco, String dataExp, String referencia, String marca, TipoRefri tipoRefri) {
-        super(nome, preco, dataExp, referencia, marca);
+    public Refrigerante(String nome, double preco, String dataExp, String refBrand, String marca, TipoRefri tipoRefri) {
+        super(nome, preco, dataExp, refBrand, marca);
         this.tipoRefri = tipoRefri;
     }
 
@@ -26,7 +26,9 @@ public class Refrigerante extends Produto {
 
     @Override
     public String toString() {
-        return String.format("Refrigerante: %s, Tipo de bebida: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s", getNome(), tipoRefri, getPreco(), getMarca(), getReferencia(), getDataExp());
+        return String.format(
+                "Refrigerante: %s, Tipo de bebida: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s",
+                getNome(), tipoRefri, getPreco(), getMarca(), getRefBrand(), getDataExp());
     }
 
     @Override
@@ -46,7 +48,6 @@ public class Refrigerante extends Produto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), tipoRefri);        
+        return Objects.hash(super.hashCode(), tipoRefri);
     }
-
 }
