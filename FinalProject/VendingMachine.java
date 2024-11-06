@@ -504,10 +504,60 @@ public class VendingMachine implements Serializable {
 
     // =========== Remove Refrigerante =========== //
     public void removeRefrigerante(Scanner scanner) {
+        // List all refrigerantes
+        for (Refrigerante refrigerante : refrigerantes) {
+            System.out.printf("%d - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
+                    refrigerante.getReferencia(),
+                    refrigerante.getRefBrand(),
+                    refrigerante.getNome(),
+                    refrigerante.getPreco(),
+                    refrigerante.getTipoRefri(),
+                    refrigerante.getMarca());
+        }
+        /* Select a product by reference */
+        System.out.print("\nEscolha o refrigerante pela referência ID: (0 para cancelar):");
+        int selectedRefrigerante = scanner.nextInt();
+
+        scanner.nextLine(); // Consume newline left-over
+
+        if (selectedRefrigerante == 0) {
+            System.out.println("Remoção cancelada.");
+        } else if (selectedRefrigerante > 0 && selectedRefrigerante <= chocolates.size()) {
+            // Remove the product from the list
+            chocolates.remove(selectedRefrigerante - 1);
+            System.out.println("Refrigerante removido com sucesso!");
+        }
+        // save stock
+        saveToFile();
     }
 
     // =========== Remove Sandes =========== //
     public void removeSandes(Scanner scanner) {
+        // List all sandes
+        for (Sandes sandes : sandwiches) {
+            System.out.printf("%d - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
+                    sandes.getReferencia(),
+                    sandes.getRefBrand(),
+                    sandes.getNome(),
+                    sandes.getPreco(),
+                    sandes.getTipoSandes(),
+                    sandes.getMarca());
+        }
+        /* Select a product by reference */
+        System.out.print("\nEscolha a sandes pela referência ID: (0 para cancelar):");
+        int selectedSandes = scanner.nextInt();
+
+        scanner.nextLine(); // Consume newline left-over
+
+        if (selectedSandes == 0) {
+            System.out.println("Remoção cancelada.");
+        } else if (selectedSandes > 0 && selectedSandes <= chocolates.size()) {
+            // Remove the product from the list
+            chocolates.remove(selectedSandes - 1);
+            System.out.println("Sandes removido com sucesso!");
+        }
+        // save stock
+        saveToFile();
     }
 
     /* ===================== Menu Client ===================== */
@@ -590,8 +640,9 @@ public class VendingMachine implements Serializable {
 
     // =========== Buy Refrigerantes =========== //
     private void buyRefrigerante(Scanner scanner, VendingMachine vendingMachine) {
-        if (refrigerantes.isEmpty()) {
+        if (refrigerantes.isEmpty() || refrigerantes.size() == 0) {
             System.out.println("Desculpe, não há refrigerantes disponíveis.");
+            showMainMenu(scanner, vendingMachine);
         }
         System.out.println("=== Refrigerantes Disponíveis ===");
         System.out.println("=== " + refrigerantes.size() + " ===");
@@ -659,6 +710,7 @@ public class VendingMachine implements Serializable {
         saveToFile();
     }
 
+    /* Payment Simulation */
     private boolean simulatePayment(double amount, double paymentMoney) {
         System.out.println("Simulando pagamento");
         System.out.println("Valor a pagar: " + amount + "€");
@@ -679,36 +731,43 @@ public class VendingMachine implements Serializable {
         System.out.printf("Você escolheu o chocolate: %s - Preço: %.2f €%n", selectedChocolate.getNome(),
                 selectedChocolate.getPreco());
 
-        double amount = 0.0;
-        boolean validInput = false;
+        double totalInserted = 0.0; // Initialize total inserted amount
+        boolean paymentSuccessful = false;
 
-        // Loop until valid input is received
-        while (!validInput) {
+        while (!paymentSuccessful) {
             System.out.print("Introduza as moedas para pagamento: ");
             String paymentMethod = scanner.nextLine().trim();
 
             try {
-                amount = Double.parseDouble(paymentMethod);
+                double amount = Double.parseDouble(paymentMethod);
                 if (amount < 0) {
                     System.out.println("O valor não pode ser negativo. Tente novamente.");
+                    continue; // Ask for input again
+                }
+
+                totalInserted += amount; // Add the inserted amount to the total
+                System.out.printf("Total inserido até agora: %.2f €%n", totalInserted);
+
+                if (totalInserted < selectedChocolate.getPreco()) {
+                    System.out.printf("Valor ainda insuficiente. Faltam %.2f € para completar o pagamento.%n",
+                            selectedChocolate.getPreco() - totalInserted);
                 } else {
-                    validInput = true;
+                    // Payment successful
+                    paymentSuccessful = true;
+                    double change = totalInserted - selectedChocolate.getPreco();
+                    System.out.println("Pagamento realizado com sucesso!");
+                    if (change > 0) {
+                        System.out.printf("Troco: %.2f €%n", change);
+                    }
+                    produtosVendidos.add(selectedChocolate);
+                    chocolates.remove(selectedChocolate);
+
+                    // Add product value to total sales
+                    vendingMachine.totalVendas += selectedChocolate.getPreco();
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Por favor, insira um número válido.");
             }
-        }
-
-        boolean paymentSuccessful = simulatePayment(selectedChocolate.getPreco(), amount);
-
-        if (paymentSuccessful) {
-            System.out.println("Compra realizada com sucesso!");
-            produtosVendidos.add(selectedChocolate);
-            chocolates.remove(selectedChocolate);
-            // Adicionar o valor do produto vendido ao total
-            vendingMachine.totalVendas += selectedChocolate.getPreco();
-        } else {
-            System.out.println("Compra não realizada. Verifique se o valor inserido é suficiente.");
         }
     }
 
@@ -717,37 +776,43 @@ public class VendingMachine implements Serializable {
         System.out.printf("Você escolheu o refrigerante: %s - Preço: %.2f €%n", selectedRefrigerante.getNome(),
                 selectedRefrigerante.getPreco());
 
-        double amount = 0.0;
-        boolean validInput = false;
+        double totalInserted = 0.0; // Initialize total inserted amount
+        boolean paymentSuccessful = false;
 
-        // Loop until valid input is received
-        while (!validInput) {
+        while (!paymentSuccessful) {
             System.out.print("Introduza as moedas para pagamento: ");
             String paymentMethod = scanner.nextLine().trim();
 
             try {
-                amount = Double.parseDouble(paymentMethod);
+                double amount = Double.parseDouble(paymentMethod);
                 if (amount < 0) {
                     System.out.println("O valor não pode ser negativo. Tente novamente.");
+                    continue; // Ask for input again
+                }
+
+                totalInserted += amount; // Add the inserted amount to the total
+                System.out.printf("Total inserido até agora: %.2f €%n", totalInserted);
+
+                if (totalInserted < selectedRefrigerante.getPreco()) {
+                    System.out.printf("Valor ainda insuficiente. Faltam %.2f € para completar o pagamento.%n",
+                            selectedRefrigerante.getPreco() - totalInserted);
                 } else {
-                    validInput = true;
+                    // Payment successful
+                    paymentSuccessful = true;
+                    double change = totalInserted - selectedRefrigerante.getPreco();
+                    System.out.println("Pagamento realizado com sucesso!");
+                    if (change > 0) {
+                        System.out.printf("Troco: %.2f €%n", change);
+                    }
+                    produtosVendidos.add(selectedRefrigerante);
+                    refrigerantes.remove(selectedRefrigerante);
+
+                    // Adicionar o valor do produto vendido ao total
+                    vendingMachine.totalVendas += selectedRefrigerante.getPreco();
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Por favor, insira um número válido.");
             }
-        }
-
-        boolean paymentSuccessful = simulatePayment(selectedRefrigerante.getPreco(), amount);
-
-        if (paymentSuccessful) {
-            System.out.println("Compra realizada com sucesso!");
-            produtosVendidos.add(selectedRefrigerante);
-            refrigerantes.remove(selectedRefrigerante);
-
-            // Adicionar o valor do produto vendido ao total
-            vendingMachine.totalVendas += selectedRefrigerante.getPreco();
-        } else {
-            System.out.println("Compra não realizada. Verifique se o valor inserido é suficiente.");
         }
     }
 
@@ -755,37 +820,43 @@ public class VendingMachine implements Serializable {
         System.out.printf("Você escolheu a sandes: %s - Preço: %.2f €%n", selectedSandes.getNome(),
                 selectedSandes.getPreco());
 
-        double amount = 0.0;
-        boolean validInput = false;
+        double totalInserted = 0.0; // Initialize total inserted amount
+        boolean paymentSuccessful = false;
 
-        // Loop until valid input is received
-        while (!validInput) {
+        while (!paymentSuccessful) {
             System.out.print("Introduza as moedas para pagamento: ");
             String paymentMethod = scanner.nextLine().trim();
 
             try {
-                amount = Double.parseDouble(paymentMethod);
+                double amount = Double.parseDouble(paymentMethod);
                 if (amount < 0) {
                     System.out.println("O valor não pode ser negativo. Tente novamente.");
+                    continue; // Ask for input again
+                }
+
+                totalInserted += amount; // Add the inserted amount to the total
+                System.out.printf("Total inserido até agora: %.2f €%n", totalInserted);
+
+                if (totalInserted < selectedSandes.getPreco()) {
+                    System.out.printf("Valor ainda insuficiente. Faltam %.2f € para completar o pagamento.%n",
+                            selectedSandes.getPreco() - totalInserted);
                 } else {
-                    validInput = true;
+                    // Payment successful
+                    paymentSuccessful = true;
+                    double change = totalInserted - selectedSandes.getPreco();
+                    System.out.println("Pagamento realizado com sucesso!");
+                    if (change > 0) {
+                        System.out.printf("Troco: %.2f €%n", change);
+                    }
+                    produtosVendidos.add(selectedSandes);
+                    sandwiches.remove(selectedSandes);
+
+                    // Adicionar o valor do produto vendido ao total
+                    vendingMachine.totalVendas += selectedSandes.getPreco();
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Por favor, insira um número válido.");
             }
-        }
-
-        boolean paymentSuccessful = simulatePayment(selectedSandes.getPreco(), amount);
-
-        if (paymentSuccessful) {
-            System.out.println("Compra realizada com sucesso!");
-            produtosVendidos.add(selectedSandes);
-            sandwiches.remove(selectedSandes);
-
-            // Adicionar o valor do produto vendido ao total
-            vendingMachine.totalVendas += selectedSandes.getPreco();
-        } else {
-            System.out.println("Compra não realizada. Verifique se o valor inserido é suficiente.");
         }
     }
 }
