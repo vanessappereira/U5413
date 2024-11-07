@@ -203,8 +203,15 @@ public class VendingMachine implements Serializable {
         if (chocolates.isEmpty()) {
             System.out.println("Nenhum produto disponível.");
         } else {
+            System.out.println("=== Chocolates Disponíveis: " + chocolates.size() + " ===");
             for (Chocolate chocolate : chocolates) {
-                System.out.println(chocolate);
+                System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
+                        chocolate.getReferencia(),
+                        chocolate.getRefBrand(),
+                        chocolate.getNome(),
+                        chocolate.getPreco(),
+                        chocolate.getTipoCacau(),
+                        chocolate.getMarca());
             }
         }
     }
@@ -214,20 +221,29 @@ public class VendingMachine implements Serializable {
         if (refrigerantes.isEmpty()) {
             System.out.println("Nenhum produto disponível.");
         } else {
+            System.out.println("=== Refrigerantes Disponíveis:" + refrigerantes.size() + " ===");
             for (Refrigerante refrigerante : refrigerantes) {
-                System.out.println(refrigerante);
+                System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
+                        refrigerante.getReferencia(),
+                        refrigerante.getRefBrand(),
+                        refrigerante.getNome(),
+                        refrigerante.getPreco(),
+                        refrigerante.getTipoRefri(),
+                        refrigerante.getMarca());
             }
         }
     }
 
     private void listSandes() {
-        System.out.println("\n======= Sandes ==============");
-        if (sandwiches.isEmpty()) {
-            System.out.println("Nenhum produto disponível.");
-        } else {
-            for (Sandes sandes : sandwiches) {
-                System.out.println(sandes);
-            }
+        System.out.println("=== Sandes Disponíveis ===" + sandwiches.size() + " ===");
+        for (Sandes sandes : sandwiches) {
+            System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
+                    sandes.getReferencia(),
+                    sandes.getRefBrand(),
+                    sandes.getNome(),
+                    sandes.getPreco(),
+                    sandes.getTipoSandes(),
+                    sandes.getMarca());
         }
     }
 
@@ -668,16 +684,7 @@ public class VendingMachine implements Serializable {
             System.out.println("Desculpe, não há chocolates disponíveis.");
             showMainMenu(scanner, vendingMachine);
         }
-        System.out.println("=== Chocolates Disponíveis: " + chocolates.size() + " ===");
-        for (Chocolate chocolate : chocolates) {
-            System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
-                    chocolate.getReferencia(),
-                    chocolate.getRefBrand(),
-                    chocolate.getNome(),
-                    chocolate.getPreco(),
-                    chocolate.getTipoCacau(),
-                    chocolate.getMarca());
-        }
+        listChocolates();
 
         /* Select a product by reference */
         System.out.print("\nEscolha o chocolate pela referência: (0 para voltar):");
@@ -703,17 +710,7 @@ public class VendingMachine implements Serializable {
             System.out.println("Desculpe, não há refrigerantes disponíveis.");
             showMainMenu(scanner, vendingMachine);
         }
-        System.out.println("=== Refrigerantes Disponíveis:" + refrigerantes.size() + " ===");
-
-        for (Refrigerante refrigerante : refrigerantes) {
-            System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
-                    refrigerante.getReferencia(),
-                    refrigerante.getRefBrand(),
-                    refrigerante.getNome(),
-                    refrigerante.getPreco(),
-                    refrigerante.getTipoRefri(),
-                    refrigerante.getMarca());
-        }
+        listRefrigerantes();
 
         /* Select a product by reference */
         System.out.print("\nEscolha o refrigerante pela referência: (0 para cancelar):");
@@ -739,16 +736,7 @@ public class VendingMachine implements Serializable {
             System.out.println("Desculpe, não há sandes disponíveis.");
             showMainMenu(scanner, vendingMachine);
         }
-        System.out.println("=== Sandes Disponíveis ===" + sandwiches.size() + " ===");
-        for (Sandes sandes : sandwiches) {
-            System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
-                    sandes.getReferencia(),
-                    sandes.getRefBrand(),
-                    sandes.getNome(),
-                    sandes.getPreco(),
-                    sandes.getTipoSandes(),
-                    sandes.getMarca());
-        }
+        listSandes();
 
         /* Select a product by reference */
         System.out.print("\nEscolha a sandes pela referência: (0 para cancelar):");
