@@ -3,7 +3,7 @@ package FinalProject;
 import java.io.Serializable;
 
 public abstract class Produto implements Serializable {
-
+    private static final long serialVersionUID = 1L; // Added for serialization
     private final String nome;
     private final double preco;
     private final String refBrand;
@@ -46,8 +46,8 @@ public abstract class Produto implements Serializable {
     }
 
     public void setReferencia(int referencia) {
-        incrementReferencia();
-        this.referencia = referencia;
+        this.referencia = referencia; // Update referencia first
+        incrementReferencia(); // Then increment it
     }
 
     public String getReferencia() {

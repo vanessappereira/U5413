@@ -27,8 +27,8 @@ public class Refrigerante extends Produto {
     @Override
     public String toString() {
         return String.format(
-                "Refrigerante: %s, Tipo de bebida: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s",
-                getNome(), tipoRefri, getPreco(), getMarca(), getRefBrand(), getDataExp());
+                "%s - %s, Tipo de bebida: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s",
+                getReferencia(), getNome(), tipoRefri, getPreco(), getMarca(), getRefBrand(), getDataExp());
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Refrigerante extends Produto {
         if (this == r) {
             return true;
         }
-        if (!(r instanceof Chocolate)) {
+        if (!(r instanceof Refrigerante)) {
             return false;
         }
         if (!super.equals(r)) {

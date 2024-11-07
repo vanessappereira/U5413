@@ -91,7 +91,7 @@ public class VendingMachine implements Serializable {
             System.out.println("----- Máquina de Venda -----");
             System.out.println("--- 1. Cliente           ---");
             System.out.println("--- 2. Admin             ---");
-            System.out.println("--- 3. Sair              ---");
+            System.out.println("--- 0. Sair              ---");
             System.out.print("Selecione uma opção: ");
 
             String input = scanner.nextLine().trim();
@@ -109,7 +109,7 @@ public class VendingMachine implements Serializable {
                     case 2:
                         displayAdminMenu(scanner, vendingMachine);
                         break;
-                    case 3:
+                    case 0:
                         exitProgram(vendingMachine);
                     default:
                         System.out.println("Opção inválida. Por favor, tente novamente.");
@@ -134,16 +134,16 @@ public class VendingMachine implements Serializable {
                 "3. Consultar valor total de vendas\n" +
                 "4. Visualizar Histórico\n" +
                 "5. Limpar Histórico\n" +
-                "6. Voltar ao menu principal\n" +
+                "9. Voltar ao menu principal\n" +
                 "Selecione uma opção: ");
         try {
             int adminChoice = Integer.parseInt(scanner.nextLine());
             switch (adminChoice) {
                 case 1 -> {
-                    addProduct(scanner);
+                    addProduct(scanner, vendingMachine);
                 }
                 case 2 -> {
-                    removeProduct(scanner);
+                    removeProduct(scanner, vendingMachine);
                 }
                 case 3 -> {
                     displayTotalSales();
@@ -154,7 +154,7 @@ public class VendingMachine implements Serializable {
                 case 5 -> {
                     cleanHistorySales();
                 }
-                case 6 ->
+                case 9 ->
                     showMainMenu(scanner, vendingMachine);
                 default ->
                     System.out.println("Opção inválida!");
@@ -165,13 +165,14 @@ public class VendingMachine implements Serializable {
     }
 
     /* ===================== Product management ===================== */
-    public void addProduct(Scanner scanner) {
+    public void addProduct(Scanner scanner, VendingMachine vendingMachine) {
         System.out.println("=== Adicionar Produto ===");
-        System.out.println("1 - Chocolate (Max: " + (MAX_CHOCOLATES - chocolates.size()) + " unidades)");
-        System.out.println("2 - Refrigerante (Max: " + (MAX_REFRIGERANTES - refrigerantes.size()) + " unidades)");
-        System.out.println("3 - Sandes (Max: " + (MAX_SANDES - sandwiches.size()) + " unidades)");
-        System.out.println("4 - Voltar");
-        System.out.print("\nEscolha o tipo de produto: ");
+        System.out.println("1 - Chocolate (Disponível: " + (MAX_CHOCOLATES - chocolates.size()) + " unidades)");
+        System.out
+                .println("2 - Refrigerante (Disponível: " + (MAX_REFRIGERANTES - refrigerantes.size()) + " unidades)");
+        System.out.println("3 - Sandes (Disponível: " + (MAX_SANDES - sandwiches.size()) + " unidades)");
+        System.out.println("9 - Voltar");
+        System.out.print("\nEscolha a opção: ");
 
         try {
             int choice = scanner.nextInt();
@@ -184,8 +185,9 @@ public class VendingMachine implements Serializable {
                     addRefrigerante(scanner);
                 case 3:
                     addSandwich(scanner);
-                case 4:
+                case 9:
                     System.out.println("Operação cancelada.");
+                    showMainMenu(scanner, vendingMachine);
                 default:
                     System.out.println("Opção inválida!");
             }
@@ -195,24 +197,68 @@ public class VendingMachine implements Serializable {
         }
     }
 
+    // =========== List Products =========== //
+    private void listChocolates() {
+        System.out.println("\n======= Chocolates =======");
+        if (chocolates.isEmpty()) {
+            System.out.println("Nenhum produto disponível.");
+        } else {
+            for (Chocolate chocolate : chocolates) {
+                System.out.println(chocolate);
+            }
+        }
+    }
+
+    private void listRefrigerantes() {
+        System.out.println("\n======= Refrigerantes =======");
+        if (refrigerantes.isEmpty()) {
+            System.out.println("Nenhum produto disponível.");
+        } else {
+            for (Refrigerante refrigerante : refrigerantes) {
+                System.out.println(refrigerante);
+            }
+        }
+    }
+
+    private void listSandes() {
+        System.out.println("\n======= Sandes ==============");
+        if (sandwiches.isEmpty()) {
+            System.out.println("Nenhum produto disponível.");
+        } else {
+            for (Sandes sandes : sandwiches) {
+                System.out.println(sandes);
+            }
+        }
+    }
+
     // =========== Remove Product using scanner =========== //
-    public void removeProduct(Scanner scanner) {
+    public void removeProduct(Scanner scanner, VendingMachine vendingMachine) {
         System.out.println("Escolha o tipo de produto:");
         System.out.println("1 - Chocolate");
         System.out.println("2 - Refrigerante");
         System.out.println("3 - Sandes");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline left-over
+        System.out.println("9 - Voltar");
+        System.out.print("\nEscolha a opção: ");
+        try {
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline left-over
 
-        switch (choice) {
-            case 1 ->
-                removeChocolate(scanner);
-            case 2 ->
-                removeRefrigerante(scanner);
-            case 3 ->
-                removeSandes(scanner);
-            default ->
-                System.out.println("Opção inválida!");
+            switch (choice) {
+                case 1:
+                    removeChocolate(scanner);
+                case 2:
+                    removeRefrigerante(scanner);
+                case 3:
+                    removeSandes(scanner);
+                case 9:
+                    System.out.println("Operação cancelada.");
+                    showMainMenu(scanner, vendingMachine);
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } catch (Exception e) {
+            scanner.nextLine(); // Clear buffer
+            System.out.println("Erro: Input inválido!");
         }
     }
 
@@ -342,7 +388,7 @@ public class VendingMachine implements Serializable {
 
     private Chocolate findChocolateByReference(String reference) {
         for (Chocolate chocolate : chocolates) {
-            if (chocolate.getReferencia().equalsIgnoreCase(reference)) {
+            if (chocolate.getRefBrand().equalsIgnoreCase(reference)) {
                 return chocolate; // Return the found chocolate
             }
         }
@@ -389,10 +435,10 @@ public class VendingMachine implements Serializable {
 
             for (int i = 0; i < qntd; i++) {
                 addChoc = new Chocolate(info.name, info.price, info.expDate, info.reference, info.brand, tipoCacau);
-                chocolates.add(addChoc);
-
                 // Increment ID
                 addChoc.setReferencia(chocolates.size());
+
+                chocolates.add(addChoc);
             }
             scanner.nextLine();// Clear buffer
 
@@ -425,9 +471,11 @@ public class VendingMachine implements Serializable {
             for (int i = 0; i < qntd; i++) {
                 addRef = new Refrigerante(info.name, info.price, info.expDate, info.reference, info.brand,
                         tipoRefrigerante);
-                refrigerantes.add(addRef);
+
                 // Increment ID
                 addRef.setReferencia(refrigerantes.size());
+
+                refrigerantes.add(addRef);
             }
             scanner.nextLine();// Clear buffer
 
@@ -459,9 +507,11 @@ public class VendingMachine implements Serializable {
 
             for (int i = 0; i < qntd; i++) {
                 addSandes = new Sandes(info.name, info.price, info.expDate, info.reference, info.brand, tipoSandes);
-                sandwiches.add(addSandes);
+
                 // Increment ID
                 addSandes.setReferencia(sandwiches.size());
+
+                sandwiches.add(addSandes);
             }
             scanner.nextLine();// Clear buffer
 
@@ -492,11 +542,11 @@ public class VendingMachine implements Serializable {
         scanner.nextLine(); // Consume newline left-over
 
         if (selectedChocolate == 0) {
-            System.out.println("Remoção cancelada.");
+            System.out.print("Remoção cancelada.");
         } else if (selectedChocolate > 0 && selectedChocolate <= chocolates.size()) {
             // Remove the product from the list
             chocolates.remove(selectedChocolate - 1);
-            System.out.println("Chocolate removido com sucesso!");
+            System.out.print("Chocolate removido com sucesso!");
         }
         // save stock
         saveToFile();
@@ -564,13 +614,14 @@ public class VendingMachine implements Serializable {
     public void displayClientMenu(Scanner scanner, VendingMachine vendingMachine) {
         System.out.println("------- Menu Cliente -------");
         System.out.println("1. Comprar produto");
-        System.out.println("2. Voltar ao menu principal");
+        System.out.println("9. Voltar ao menu principal");
         System.out.print("Selecione uma opção: ");
         int choice = Integer.parseInt(scanner.nextLine());
+
         switch (choice) {
             case 1 ->
                 buyProduct(scanner, vendingMachine);
-            case 2 ->
+            case 9 ->
                 vendingMachine.showMainMenu(scanner, vendingMachine);
             default ->
                 System.out.println("Opção inválida!");
@@ -578,11 +629,17 @@ public class VendingMachine implements Serializable {
     }
 
     public void buyProduct(Scanner scanner, VendingMachine vendingMachine) {
-        System.out.println("Escolha o produto:");
+        System.out.println("======= Produtos disponíveis =======");
+        // List all products
+        listChocolates();
+        listRefrigerantes();
+        listSandes();
+        System.out.println("======= Opções =======");
         System.out.println("1 - Chocolate");
         System.out.println("2 - Refrigerante");
         System.out.println("3 - Sandes");
-        System.out.println("4 - Sair");
+        System.out.println("9 - Voltar");
+        System.out.print("\nEscolha o produto:");
 
         /* First select the type of product */
         int choice = scanner.nextInt();
@@ -596,8 +653,10 @@ public class VendingMachine implements Serializable {
                 buyRefrigerante(scanner, vendingMachine);
             case 3 ->
                 buySandes(scanner, vendingMachine);
-            case 4 ->
+            case 9 -> {
                 System.out.println("Voltando ao menu principal.");
+                showMainMenu(scanner, vendingMachine);
+            }
             default ->
                 System.out.println("Opção inválida!");
         }
@@ -607,9 +666,9 @@ public class VendingMachine implements Serializable {
     private void buyChocolate(Scanner scanner, VendingMachine vendingMachine) {
         if (chocolates.isEmpty()) {
             System.out.println("Desculpe, não há chocolates disponíveis.");
+            showMainMenu(scanner, vendingMachine);
         }
-        System.out.println("=== Chocolates Disponíveis ===");
-        System.out.println("=== " + chocolates.size() + " ===");
+        System.out.println("=== Chocolates Disponíveis: " + chocolates.size() + " ===");
         for (Chocolate chocolate : chocolates) {
             System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
                     chocolate.getReferencia(),
@@ -621,11 +680,11 @@ public class VendingMachine implements Serializable {
         }
 
         /* Select a product by reference */
-        System.out.print("\nEscolha o chocolate pela referência: (0 para cancelar):");
+        System.out.print("\nEscolha o chocolate pela referência: (0 para voltar):");
         String reference = scanner.nextLine().trim();
         if (reference.equals("0")) {
             System.out.println("Compra cancelada.");
-            return;
+            displayClientMenu(scanner, vendingMachine);
         }
         Chocolate selectedChocolate = findChocolateByReference(reference);
         if (selectedChocolate == null) {
@@ -644,8 +703,8 @@ public class VendingMachine implements Serializable {
             System.out.println("Desculpe, não há refrigerantes disponíveis.");
             showMainMenu(scanner, vendingMachine);
         }
-        System.out.println("=== Refrigerantes Disponíveis ===");
-        System.out.println("=== " + refrigerantes.size() + " ===");
+        System.out.println("=== Refrigerantes Disponíveis:" + refrigerantes.size() + " ===");
+
         for (Refrigerante refrigerante : refrigerantes) {
             System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
                     refrigerante.getReferencia(),
@@ -660,12 +719,12 @@ public class VendingMachine implements Serializable {
         System.out.print("\nEscolha o refrigerante pela referência: (0 para cancelar):");
         String reference = scanner.nextLine().trim();
         if (reference.equals("0")) {
-            System.out.println("Compra cancelada.");
+            System.out.print("Compra cancelada.");
             return;
         }
         Refrigerante selectedRefrigerante = findRefrigeranteByReference(reference);
         if (selectedRefrigerante == null) {
-            System.out.println("Refrigerante não encontrado. Tente novamente");
+            System.out.print("Refrigerante não encontrado. Tente novamente");
             return;
         }
 
@@ -676,12 +735,11 @@ public class VendingMachine implements Serializable {
 
     // =========== Buy Sandes =========== //
     private void buySandes(Scanner scanner, VendingMachine vendingMachine) {
-
         if (sandwiches.isEmpty()) {
             System.out.println("Desculpe, não há sandes disponíveis.");
+            showMainMenu(scanner, vendingMachine);
         }
-        System.out.println("=== Sandes Disponíveis ===");
-        System.out.println("=== " + sandwiches.size() + " ===");
+        System.out.println("=== Sandes Disponíveis ===" + sandwiches.size() + " ===");
         for (Sandes sandes : sandwiches) {
             System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
                     sandes.getReferencia(),
@@ -708,23 +766,6 @@ public class VendingMachine implements Serializable {
         // Proceed with payment
         processPaymentSandes(selectedSandes, scanner, vendingMachine);
         saveToFile();
-    }
-
-    /* Payment Simulation */
-    private boolean simulatePayment(double amount, double paymentMoney) {
-        System.out.println("Simulando pagamento");
-        System.out.println("Valor a pagar: " + amount + "€");
-
-        if (paymentMoney >= amount) {
-            System.out.println("Pagamento realizado com sucesso!");
-            double change = paymentMoney - amount;
-            System.out.printf("Troco:  %.2f€ \n", change);
-            return true;
-        } else if (paymentMoney < amount) {
-            System.out.println("Pagamento não realizado. Insuficiente dinheiro.");
-            return false;
-        }
-        return true; // Simulate a successful payment
     }
 
     private void processPaymentChocolate(Chocolate selectedChocolate, Scanner scanner, VendingMachine vendingMachine) {
@@ -859,4 +900,26 @@ public class VendingMachine implements Serializable {
             }
         }
     }
+
+    public void addChocolate2(Chocolate chocolate) {
+        // Increment ID
+        chocolate.setReferencia(chocolates.size());
+
+        chocolates.add(chocolate);
+    }
+
+    public void addRefrigerante2(Refrigerante refrigerante) {
+        // Increment ID
+        refrigerante.setReferencia(refrigerantes.size());
+
+        refrigerantes.add(refrigerante);
+    }
+
+    public void addSandes2(Sandes sandes) {
+        // Increment ID
+        sandes.setReferencia(sandwiches.size());
+
+        sandwiches.add(sandes);
+    }
+
 }

@@ -27,8 +27,8 @@ public class Chocolate extends Produto {
     @Override
     public String toString() {
         return String.format(
-                "Chocolate: %s, Tipo de Cacau: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s",
-                getNome(), tipoCacau, getPreco(), getMarca(), getRefBrand(), getDataExp());
+                "%s - %s, Tipo de Cacau: %s, Preço: %.2f€, Marca: %s, Referência: %s, Data de Expiração: %s",
+                getReferencia(), getNome(), tipoCacau, getPreco(), getMarca(), getRefBrand(), getDataExp());
     }
 
     // Compare objects
