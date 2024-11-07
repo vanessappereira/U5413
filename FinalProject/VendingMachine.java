@@ -909,5 +909,17 @@ public class VendingMachine implements Serializable {
 
         sandwiches.add(sandes);
     }
+    public String showMainMenuGUI(Scanner scanner, VendingMachine vendingMachine) {
+        StringBuilder menu = new StringBuilder();
+        menu.append("----- Máquina de Venda -----\n");
+        menu.append("--- 1. Cliente           ---\n");
+        menu.append("--- 2. Admin             ---\n");
+        menu.append("--- 0. Sair              ---\n");
+        menu.append("Selecione uma opção: \n");
 
+        // Instead of a while loop, you would typically handle the menu selection
+        // in the GUI event handling (like button clicks).
+        // For now, just return the menu string.
+        return menu.toString();
+    }
 }
