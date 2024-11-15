@@ -235,7 +235,7 @@ public class VendingMachine implements Serializable {
     }
 
     private void listSandes() {
-        System.out.println("=== Sandes Disponíveis ===" + sandwiches.size() + " ===");
+        System.out.println("=== Sandes Disponíveis: " + sandwiches.size() + " ===");
         for (Sandes sandes : sandwiches) {
             System.out.printf("%s - %s - %s - %.2f \u20ac - Tipo: %s - Marca: %s%n",
                     sandes.getReferencia(),
