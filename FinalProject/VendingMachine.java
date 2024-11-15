@@ -65,10 +65,6 @@ public class VendingMachine implements Serializable {
         System.out.println("Total de vendas: " + totalVendas);
     }
 
-    public double getTotalSales() {
-        return totalVendas;
-    }
-
     public void cleanHistorySales() {
         produtosVendidos.clear();
         totalVendas = 0.0;
