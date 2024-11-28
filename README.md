@@ -223,7 +223,7 @@ O sistema deve apresentar uma lista com os nomes de todos os funcionários, junt
 
 ### Simulação de uma Máquina de Venda Automática de Snacks
 
-## Neste exercício pretende-se que desenvolva uma aplicação que simule uma máquina de venda automática de snacks. A máquina deve ter a capacidade de vender diversos tipos de produtos: chocolates, refrigerantes e sandes. Cada produto é caracterizado por um nome, um preço, uma referência e um prazo de validade
+Neste exercício pretende-se que desenvolva uma aplicação que simule uma máquina de venda automática de snacks. A máquina deve ter a capacidade de vender diversos tipos de produtos: chocolates, refrigerantes e sandes. Cada produto é caracterizado por um nome, um preço, uma referência e um prazo de validade
 
 ### A máquina possui as seguintes capacidades
 
