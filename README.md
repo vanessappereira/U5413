@@ -14,6 +14,12 @@ Este repositório contém uma coleção de exercícios práticos de programaçã
   - [1. Classe Retangulo](#1-classe-retangulo)
   - [2. Classe Livro](#2-classe-livro)
   - [3. Classe ContaBancaria](#3-classe-contabancaria)
+- [Ficha 4](#ficha-4)
+  - [1. Classe Livro e Biblioteca](#1-classe-livro-e-biblioteca)
+  - [2. Classe Cliente e ContaBancaria](#2-classe-cliente-e-contabancaria)
+- [Ficha 5](#ficha-5)
+  - [Sistema de Cálculo de Salários](#sistema-de-cálculo-de-salários)
+- [Projeto Final: Simulação de uma Máquina de Venda Automática de Snacks](#projeto-final)
 
 ## Ficha 1
 
@@ -121,3 +127,133 @@ No método `main`, crie uma instância da `ContaBancaria` e implemente um menu p
 - **Consultar Total de Movimentos**: Exiba no console o total de movimentos realizados.
 
 - **Opção Inválida**: Caso o usuário insira uma opção inválida (diferente de 0, 1, 2, 3 ou 4), informe que a opção é inválida e solicite uma nova entrada.
+
+## Ficha 4
+
+### 1. Classe Livro e Biblioteca
+
+- **Classe Livro**:
+
+  - **Atributos**:
+    - `titulo` (String)
+    - `autor` (String)
+  - **Métodos**:
+    - Getters e Setters para os atributos.
+
+- **Classe Biblioteca**:
+
+  - **Atributos**:
+    - `livros` (`ArrayList<Livro>` ou array de 3 livros)
+  - **Métodos**:
+  - **Adicionar Livro**: Método para adicionar livros, garantindo que não sejam adicionados mais do que três.
+  - **Listar Livros**: Método para listar todos os livros presentes na biblioteca.
+
+- **Implementação**:
+  - No programa principal, utilize a classe `Scanner` para permitir que o utilizador adicione até 3 livros à biblioteca, inserindo o título e o autor. Após a adição, mostre todos os livros disponíveis na biblioteca.
+
+### 2. Classe Cliente e ContaBancaria
+
+- **Classe Cliente**:
+
+  - **Atributos**:
+    - `nome` (String)
+    - `telefone` (String)
+    - `NIF` (String)
+    - `contas` (`ArrayList<ContaBancaria>`)
+  - **Métodos**:
+    - **Adicionar Conta**: Solicita ao utilizador as informações necessárias para abrir uma conta e adiciona à lista de contas do cliente.
+    - **Eliminar Conta**: Permite ao utilizador digitar o número da conta e, se existir, elimina a conta. Caso contrário, informa que a conta não existe.
+    - **Movimentar Conta**: Permite ao utilizador realizar operações (levantar, depositar, etc.) em uma conta existente, informando se a conta ou a opção não existe.
+    - **Listar Contas**: Mostra todas as contas associadas ao cliente, exibindo apenas o número e o saldo.
+    - **Sair**: Termina o programa.
+
+- **Implementação**:
+  - No programa principal, implemente um menu que permita ao utilizador interagir com as contas bancárias, utilizando as funcionalidades descritas acima. ```markdown
+
+## Ficha 5
+
+### Sistema de Cálculo de Salários
+
+Desenvolver um sistema que calcule os salários dos funcionários de uma empresa, considerando diferentes categorias de funcionários e suas respectivas regras de cálculo.
+
+### Atributos Comuns dos Funcionários
+
+Todos os funcionários devem ter os seguintes atributos:
+
+- **Nome** (String): Nome completo do funcionário.
+- **Email** (String): Endereço de e-mail do funcionário.
+- **Departamento** (Departamento): O departamento onde o funcionário está alocado.
+- **Salário** (double): O salário base do funcionário.
+
+### Método de Cálculo de Salário
+
+Cada funcionário deve implementar um método chamado `calcularSalarioTotal()`, que retorna o salário líquido, após a dedução de 11% de contribuição social.
+
+### Regras Específicas para Categorias de Funcionários
+
+1. **Gerentes**:
+
+   - Recebem uma bonificação que é adicionada integralmente ao salário líquido.
+   - A classe `Gerente` deve chamar o construtor da superclasse e inicializar a bonificação.
+   - O método `calcularSalarioTotal()` deve ser sobrescrito para incluir a bonificação.
+
+2. **Programadores**:
+   - Recebem um bônus que é sujeito à mesma taxa de contribuição social de 11%.
+   - A classe `Programador` deve seguir o mesmo padrão da classe `Gerente`, utilizando o construtor da superclasse e sobrescrevendo o método `calcularSalarioTotal()` para incluir o valor líquido do bônus.
+
+### Estrutura da Empresa
+
+A empresa possui:
+
+- 2 Gerentes
+- 4 Programadores
+
+### Implementação do Sistema
+
+- Criar uma lista para armazenar todos os funcionários (Gerentes e Programadores).
+- Percorrer essa lista para exibir:
+  - Os nomes de todos os funcionários.
+  - O total a ser pago em salários líquidos.
+
+### Exibição dos Resultados
+
+O sistema deve apresentar uma lista com os nomes de todos os funcionários, junto com o valor total a ser pago pelos seus salários líquidos.
+
+## Projeto Final
+
+### Simulação de uma Máquina de Venda Automática de Snacks
+
+## Neste exercício pretende-se que desenvolva uma aplicação que simule uma máquina de venda automática de snacks. A máquina deve ter a capacidade de vender diversos tipos de produtos: chocolates, refrigerantes e sandes. Cada produto é caracterizado por um nome, um preço, uma referência e um prazo de validade
+
+### A máquina possui as seguintes capacidades
+
+- 20 Chocolates
+- 15 refrigerantes
+- 10 sandes
+
+### Cada tipo de produto deve ter características específicas
+
+- Chocolates: Cada chocolate deve ter um tipo de cacau (negro, branco ou leite) e uma marca associada.
+- Refrigerantes: Os refrigerantes podem ser normais ou sem açúcar e têm associada uma marca (Pepsi, Sumol ou Lipton).
+- Sandes: As sandes podem ser mistas, de fiambre ou queijo e possuem o nome do produtor associado.
+
+## Processo de Venda
+
+### A máquina deve ter a capacidade de realizar as seguintes operações
+
+1. O cliente introduz um montante.
+2. O cliente seleciona o tipo de produto desejado (chocolate, refrigerante ou sandes). Deve ser apresentada uma lista com todos os produtos disponíveis nessa categoria. Se não existirem produtos em stock, deve ser apresentada uma mensagem informativa.
+3. O cliente escolhe um produto através da referência. Se o montante introduzido for insuficiente, deve ser apresentada uma mensagem de erro indicando a diferença a ser paga. Caso contrário, o produto é entregue, e, se aplicável, o troco é devolvido. O cliente deve ter a opção de cancelar a compra se não tiver mais dinheiro.
+4. Após uma venda bem-sucedida, o stock do produto deve ser decrementado.
+
+## Gestão da máquina
+
+### Um colaborador deve poder
+
+- Adicionar novos produtos a cada uma das categorias.
+- Retirar produtos da máquina.
+- Consultar o valor total resultante de todas as vendas até ao momento.
+- Visualizar um histórico com todos os produtos vendidos, incluindo o nome do produto e o preço. Este histórico deve poder ser limpo a qualquer momento.
+
+> A aplicação deve ser desenvolvida com foco na utilização dos conceitos de programação orientada a objetos, garantindo que a estrutura do código seja flexível e mantenha a capacidade de expansão para futuras funcionalidades.
+> As funcionalidades são acedidas através de um menu de texto. Já os dados. deverão ser guardados de forma permanente num ficheiro chamado stock.dat e carregados automaticamente sempre que a máquina for ligada. Proceda ao tratamento das possíveis exceções.
