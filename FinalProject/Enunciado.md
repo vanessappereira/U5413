@@ -1,15 +1,15 @@
 
 # Simulação de uma Máquina de Venda Automática de Snacks
 
-## Neste exercício pretende-se que desenvolva uma aplicação que simule uma máquina de venda automática de snacks. A máquina deve ter a capacidade de vender diversos tipos de produtos: chocolates, refrigerantes e sandes. Cada produto é caracterizado por um nome, um preço, uma referência e um prazo de validade
+Neste exercício pretende-se que desenvolva uma aplicação que simule uma máquina de venda automática de snacks. A máquina deve ter a capacidade de vender diversos tipos de produtos: chocolates, refrigerantes e sandes. Cada produto é caracterizado por um nome, um preço, uma referência e um prazo de validade
 
-### A máquina possui as seguintes capacidades
+## A máquina possui as seguintes capacidades
 
 - 20 Chocolates
 - 15 refrigerantes
 - 10 sandes
 
-### Cada tipo de produto deve ter características específicas
+## Cada tipo de produto deve ter características específicas
 
 - Chocolates: Cada chocolate deve ter um tipo de cacau (negro, branco ou leite) e uma marca associada.
 - Refrigerantes: Os refrigerantes podem ser normais ou sem açúcar e têm associada uma marca (Pepsi, Sumol ou Lipton).
